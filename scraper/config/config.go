@@ -7,10 +7,8 @@ import (
 )
 
 type config struct {
-	ScraperPort       int    `split_words:"true" default:"9991"`
-	PersistServiceURL string `split_words:"true" default:"http://localhost:9992"`
-	mongodbHostname   string `split_words:"true" default:"localhost"`
-	mongodbPort       int    `split_words:"true" default:"27071"`
+	ScraperServicePort int    `split_words:"true" default:"9991"`
+	PersistServiceURL  string `split_words:"true" default:"http://localhost:9992/url/persist"`
 }
 
 var (
@@ -25,8 +23,3 @@ func InitEnv() bool {
 	}
 	return true
 }
-
-// func GetMongoURL() string {
-// 	uri := fmt.Sprintf("mongodb://%s:%d", Manager.mongodbHostname, Manager.mongodbPort)
-// 	return uri
-// }

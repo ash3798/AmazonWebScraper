@@ -16,6 +16,6 @@ func main() {
 	}
 
 	server.InitMappings()
-	addr := fmt.Sprintf(":%d", config.Manager.ScraperPort)
+	addr := fmt.Sprintf(":%d", config.Manager.ScraperServicePort)
 	server.Router.Run(addr)
 }
