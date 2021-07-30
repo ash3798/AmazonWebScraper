@@ -1,0 +1,30 @@
+package server
+
+import (
+	"github.com/ash3798/AmazonWebScraper/scraper/task"
+	"github.com/gin-gonic/gin"
+)
+
+var Router *gin.Engine
+
+func InitMappings() {
+	Router = gin.Default()
+
+	api := Router.Group("/url")
+	{
+		api.POST("/scrape", func(ctx *gin.Context) {
+			var urlInfo task.UrlInfo
+
+			if err := ctx.ShouldBindJSON(&urlInfo); err != nil {
+				ctx.JSON(400, gin.H{"error": "Could not read URL , " + err.Error()})
+				return
+			}
+
+			go task.ScrapeAndSend(urlInfo.Url)
+
+			ctx.JSON(200, gin.H{
+				"message": "scrape request received",
+			})
+		})
+	}
+}
