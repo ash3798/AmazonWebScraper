@@ -19,6 +19,7 @@ var (
 	Manager config
 )
 
+//InitEnv function reads the environment variables and initialize the config variable with them
 func InitEnv() bool {
 	err := envconfig.Process("", &Manager)
 	if err != nil {
@@ -28,6 +29,7 @@ func InitEnv() bool {
 	return true
 }
 
+//GetMongoURL function creates the mongo db URI according to the mentioned hostname and port
 func GetMongoURL() string {
 	uri := fmt.Sprintf("mongodb://%s:%d", Manager.MongodbHostname, Manager.MongodbPort)
 	log.Println("connecting to MongoDB URL :" + uri)

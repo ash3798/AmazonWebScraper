@@ -7,6 +7,7 @@ import (
 
 var Router *gin.Engine
 
+//InitMappings function configure the mappings for the router
 func InitMappings() {
 	Router = gin.Default()
 

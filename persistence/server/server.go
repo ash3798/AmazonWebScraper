@@ -7,6 +7,7 @@ import (
 
 var Router *gin.Engine
 
+//Mapping function does the mapping of api's in router
 func Mapping() {
 	Router = gin.Default()
 

@@ -31,6 +31,7 @@ type UrlInfo struct {
 	Url string `json:"url"`
 }
 
+//ScrapeAndSend calls the scrape function and send the result further for storage
 func ScrapeAndSend(url string) ([]byte, error) {
 	log.Println("url received is : ", url)
 
@@ -51,6 +52,7 @@ func ScrapeAndSend(url string) ([]byte, error) {
 	return data, nil
 }
 
+//doScrape function scrapes the webpage whose link is passed in the argument and return back the processed results
 func doScrape(visitLink string) ProductInfo {
 	product := Product{}
 
@@ -127,6 +129,7 @@ func doScrape(visitLink string) ProductInfo {
 	return productInfo
 }
 
+//sendToPersist function sends the data to persist service for storage
 func sendToPersist(data []byte) error {
 	resp, err := http.Post(config.Manager.PersistServiceURL, http.DetectContentType(data), bytes.NewBuffer(data))
 	if err != nil {

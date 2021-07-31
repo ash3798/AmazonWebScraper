@@ -11,6 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+//Product contains scraped details of the product
 type Product struct {
 	Name         string
 	ImageURL     string
@@ -29,6 +30,7 @@ var (
 	MongoDB *mongo.Client
 )
 
+//InitDatabaseClient connects to DB and initializes the DB client for use in application
 func InitDatabaseClient() bool {
 	client, ok := connect()
 	if !ok {
@@ -39,6 +41,7 @@ func InitDatabaseClient() bool {
 	return true
 }
 
+//connect function connects to the database and return the client back
 func connect() (*mongo.Client, bool) {
 	mongoUri := config.GetMongoURL()
 	clientOptions := options.Client().ApplyURI(mongoUri)
@@ -60,6 +63,7 @@ func connect() (*mongo.Client, bool) {
 	return client, true
 }
 
+//PersistDataToDB function persists the data in the database. It will update document if already present otherwise create new document
 func PersistDataToDB(productInfo ProductInfo) error {
 	collection := MongoDB.Database(config.Manager.MongoDBName).Collection(config.Manager.MongoCollectionName)
 
@@ -71,6 +75,7 @@ func PersistDataToDB(productInfo ProductInfo) error {
 	return nil
 }
 
+//updateIfPresent function will check if document for URL is already in DB . If yes it will update it with new info.
 func updateIfPresent(collection *mongo.Collection, productInfo ProductInfo) bool {
 	res := collection.FindOneAndReplace(
 		context.TODO(),
@@ -86,6 +91,7 @@ func updateIfPresent(collection *mongo.Collection, productInfo ProductInfo) bool
 	return true
 }
 
+//InsertToDB function insert the scrape data into db by creating new document in it.
 func InsertToDB(collection *mongo.Collection, productInfo ProductInfo) error {
 	res, err := collection.InsertOne(context.TODO(), productInfo)
 	if err != nil {

@@ -12,9 +12,11 @@ type config struct {
 }
 
 var (
+	//all config variables can be accessed through Manager
 	Manager config
 )
 
+//InitEnv function reads the environments variables and initializes the config variables with them
 func InitEnv() bool {
 	err := envconfig.Process("", &Manager)
 	if err != nil {
