@@ -58,15 +58,15 @@ Response :
 
 ## Visualizing Data
 Data can be seen by in MongoDB. You can access Mongo using two ways
-  1. You can then access you mongoDB using "MongoDB Compass" to see the records inserted to it.
-    > Mongo DB can be accessed at "localhost:27017"
-  
-  2. You can access MongoDB by entering into the mongo container
-    1. exec into the mongo container
+ 1. You can then access you mongoDB using "MongoDB Compass" to see the records inserted to it.
+    >Mongo DB can be accessed at "localhost:27017"
+
+ 2. You can access MongoDB by entering into the mongo container
+    * exec into the mongo container
       ```bash
       docker exec -it amazonwebscraper_mongo_1 bash
       ```
-    2. enter the mongo shell
+    * enter the mongo shell
       ```bash
       $ mongosh
       Current Mongosh Log ID: 610549146c95e8fe2bb0622c
@@ -74,7 +74,7 @@ Data can be seen by in MongoDB. You can access Mongo using two ways
       Using MongoDB:          5.0.1
       Using Mongosh:          1.0.1
       ```
-    3. show all DB's
+    * show all DB's
       ```bash
       test> show dbs
       admin     41 kB
@@ -86,13 +86,13 @@ Data can be seen by in MongoDB. You can access Mongo using two ways
       product>
       ```
       > You will see a "product" DB would have been created by our app. Documents will be stored in this DB
-    4. list collections
+    * list collections
       ```bash
       product> show collections
       shopitems
       ```
       > shopitems collections is created by our app
-    5. List out the data in the collections, you will find the data of the product you just scraped for.
+    * List out the data in the collections, you will find the data of the product you just scraped for.
       ```bash
       product> db.shopitems.find().pretty()
       [
