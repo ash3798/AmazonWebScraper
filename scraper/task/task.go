@@ -36,7 +36,6 @@ type UrlInfo struct {
 }
 
 func ScrapeAndSend(url string) {
-	log.Println("entered scrape function")
 	log.Println("url received is : ", url)
 
 	productInfo := doScrape(url)
@@ -63,24 +62,24 @@ func doScrape(visitLink string) ProductInfo {
 
 	// Before making a request print "Visiting ..."
 	c.OnRequest(func(r *colly.Request) {
-		log.Println("visiting", r.URL.String())
+		log.Println("Visiting ", r.URL.String())
 	})
 
 	c.OnHTML(`#titleSection`, func(e *colly.HTMLElement) {
 		title := e.ChildText("#productTitle")
-		log.Println(title)
+		//log.Println(title)
 		product.Name = title
 	})
 
 	c.OnHTML(`.a-unordered-list.a-nostyle.a-horizontal.list.maintain-height`, func(e *colly.HTMLElement) {
 		imageLink := e.ChildAttr(`.a-dynamic-image`, "src")
-		log.Println(imageLink)
+		//log.Println(imageLink)
 		product.ImageURL = imageLink
 	})
 
 	c.OnHTML(`#price`, func(e *colly.HTMLElement) {
 		price := e.ChildText(`#priceblock_ourprice`)
-		log.Println(price)
+		//log.Println(price)
 		product.Price = price
 	})
 
@@ -97,7 +96,7 @@ func doScrape(visitLink string) ProductInfo {
 				description += "."
 			}
 		})
-		log.Println(description)
+		//log.Println(description)
 		product.Description = description
 	})
 
@@ -113,18 +112,17 @@ func doScrape(visitLink string) ProductInfo {
 			if err != nil {
 				log.Println("error while converting string to int, Error: ", err.Error())
 			}
-			log.Println(reviewTotal)
+			//log.Println(reviewTotal)
 
 			product.TotalReviews = reviewTotal
 			numReviewsCaptured = true
 		}
 	})
 
-	//visitLink := "https://www.amazon.com/Sony-Alpha-a6400-Mirrorless-Camera/dp/B07MTWVN3M/ref=sr_1_1?dchild=1&keywords=a6400&qid=1627662358&sr=8-1"
 	c.Visit(visitLink)
 
 	productInfo := ProductInfo{Url: visitLink, Product: product}
-	log.Printf("%+v", productInfo)
+	log.Printf("product info scraped : %+v", productInfo)
 
 	return productInfo
 }
