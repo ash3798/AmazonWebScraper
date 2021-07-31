@@ -51,15 +51,24 @@ Body :
 
 Response :
 {
-  "message": "scrape request received"
+    "Url": "https://www.amazon.com/Sony-Alpha-a6400-Mirrorless-Camera/dp/B07MTWVN3M/ref=sr_1_1?dchild=1&keywords=a6400&qid=1627662358&sr=8-1",
+    "Product": {
+        "Name": "Sony Alpha a6400 Mirrorless Camera: Compact APS-C Interchangeable Lens Digital Camera with Real-Time Eye Auto Focus, 4K Video & Flip Up",
+        "ImageURL": "https://images-na.ssl-images-amazon.com/images/I/41-P7hZaf6L.__AC_SY300_SX300_QL70_ML2_.jpg",
+        "Description": "Next Gen speed: experience the world’s fastest 0. 02 sec AF with real-time AF and object tracking.Enhanced subject capture: wide 425 Phase/ 425 contrast detection points over 84% of the sensor",
+        "Price": "$898.00",
+        "TotalReviews": 1084
+    }
 }
 ```
-  > Server will respond with the successful receive of request and will start scraping. Once done it with scraping, it will send the scrape results to the database.
+  > * Api has been made syncronous as if now for easy accessibility of scrape results. Thus upon request it will scrape, prepare result and respond back with result.
+  > * For faster responses to api request, scraping can also be made asyncronous and OK status can be sent back to user on successful receive. 
+  > * Once server is done with scraping, it will send the scrape results to the database (done asyncronously).
 
 ## Visualizing Data
 Data can be seen by in MongoDB. You can access Mongo using two ways
- 1. You can then access you mongoDB using "MongoDB Compass" to see the records inserted to it.
-    >Mongo DB can be accessed at "localhost:27017"
+ 1. You can then access your mongoDB using "MongoDB Compass UI" to see the records inserted to it.
+    >Mongo DB can be accessed at "localhost:27017" since port has been exposed by container
 
  2. You can access MongoDB by entering into the mongo container
     * exec into the mongo container
@@ -100,9 +109,9 @@ Data can be seen by in MongoDB. You can access Mongo using two ways
           _id: ObjectId("610548929abf18b9c2b5e57c"),
           url: 'https://www.amazon.com/Sony-Alpha-a6400-Mirrorless-Camera/dp/B07MTWVN3M/ref=sr_1_1?dchild=1&keywords=a6400&qid=1627662358&sr=8-1',
           product: {
-            name: 'Sony Alpha a6400 Mirrorless Camera: Compact APS-C Interchangeable Lens Digital Camera with Real-Time Eye Auto Focus, 4K Video & Flip Up Touchscreen - E Mount Compatible Cameras - ILCE-6400/B Body',
+            name: 'Sony Alpha a6400 Mirrorless Camera: Compact APS-C Interchangeable Lens Digital Camera with Real-Time Eye Auto Focus, 4K Video',
             imageurl: 'https://images-na.ssl-images-amazon.com/images/I/41-P7hZaf6L.__AC_SY300_SX300_QL70_ML2_.jpg',
-            description: 'Next Gen speed: experience the world’s fastest 0. 02 sec AF with real-time AF and object tracking.Enhanced subject capture: wide 425 Phase/ 425 contrast detection points over 84% of the sensor.Fast & accurate: up to 11Fps continuous shooting at 24. 2MP raw with crisp, clear natural colors.Multiple movie functions: make time lapse movies or slow/quick motion videos without post processing.Tiltable LCD screen: customizable for vlogging, still photography or recording a professional film.In the box: rechargeable battery (NP-FW50) AC adaptor (ac-uud12), shoulder strap, body cap, accessory shoe cap, eyepiece cup, micro USB cable.Metering Range: -2 to 20 EV.',
+            description: 'Next Gen speed: experience the world’s fastest 0. 02 sec AF with real-time AF and object tracking.Enhanced subject capture: wide 425 Phase/ 425 contrast detection points over 84% of the sensor',
             price: '$898.00',
             totalreviews: 1083
           }
