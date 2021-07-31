@@ -20,11 +20,16 @@ func InitMappings() {
 				return
 			}
 
-			go task.ScrapeAndSend(urlInfo.Url)
+			res, err := task.ScrapeAndSend(urlInfo.Url)
+			if err != nil {
+				ctx.JSON(500, gin.H{
+					"error": "Scrape not successful. Error : " + err.Error(),
+				})
+				return
+			}
 
-			ctx.JSON(200, gin.H{
-				"message": "scrape request received",
-			})
+			ctx.Header("Content-Type", "application/json; charset=utf-8")
+			ctx.String(200, string(res))
 		})
 	}
 }

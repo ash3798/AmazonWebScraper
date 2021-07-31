@@ -14,10 +14,6 @@ import (
 	colly "github.com/gocolly/colly/v2"
 )
 
-const (
-	post = "POST"
-)
-
 type Product struct {
 	Name         string
 	ImageURL     string
@@ -35,7 +31,7 @@ type UrlInfo struct {
 	Url string `json:"url"`
 }
 
-func ScrapeAndSend(url string) {
+func ScrapeAndSend(url string) ([]byte, error) {
 	log.Println("url received is : ", url)
 
 	productInfo := doScrape(url)
@@ -45,10 +41,14 @@ func ScrapeAndSend(url string) {
 		log.Println("error while marsheling the scrape results. Error : ", err.Error())
 	}
 
-	err = sendToPersist(data)
-	if err != nil {
-		log.Println("error while sending the scrape results. Error : ", err.Error())
-	}
+	go func([]byte) {
+		err = sendToPersist(data)
+		if err != nil {
+			log.Println("error while sending the scrape results. Error : ", err.Error())
+		}
+	}(data)
+
+	return data, nil
 }
 
 func doScrape(visitLink string) ProductInfo {
