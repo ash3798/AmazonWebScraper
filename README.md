@@ -61,14 +61,14 @@ Response :
     }
 }
 ```
-  > Api has been made syncronous as if now for easy accessibility of scrape results. Thus upon request it will scrape, prepare result and respond back with result.
-  > For faster responses , scraping can also be made asyncronous. 
-  > Once server is done with scraping, it will send the scrape results to the database (done asyncronously).
+  > * Api has been made syncronous as if now for easy accessibility of scrape results. Thus upon request it will scrape, prepare result and respond back with result.
+  > * For faster responses to api request, scraping can also be made asyncronous and OK status can be sent back to user on successful receive. 
+  > * Once server is done with scraping, it will send the scrape results to the database (done asyncronously).
 
 ## Visualizing Data
 Data can be seen by in MongoDB. You can access Mongo using two ways
- 1. You can then access you mongoDB using "MongoDB Compass" to see the records inserted to it.
-    >Mongo DB can be accessed at "localhost:27017"
+ 1. You can then access your mongoDB using "MongoDB Compass UI" to see the records inserted to it.
+    >Mongo DB can be accessed at "localhost:27017" since port has been exposed by container
 
  2. You can access MongoDB by entering into the mongo container
     * exec into the mongo container
