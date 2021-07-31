@@ -42,7 +42,7 @@ amazonwebscraper_scraper_1       scraper             running             0.0.0.0
 
 1. Send Scrape request
 ```bash
-POST  \url\scrape
+POST  /url/scrape
 
 Body :   
 {
