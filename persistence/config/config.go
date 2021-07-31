@@ -10,7 +10,7 @@ import (
 type config struct {
 	PersistServicePort  int    `split_words:"true" default:"9992"`
 	MongodbHostname     string `split_words:"true" default:"localhost"`
-	MongodbPort         int    `split_words:"true" default:"27071"`
+	MongodbPort         int    `split_words:"true" default:"27017"`
 	MongoDBName         string `split_words:"true" default:"product"`
 	MongoCollectionName string `split_words:"true" default:"shopitems"`
 }
@@ -30,6 +30,6 @@ func InitEnv() bool {
 
 func GetMongoURL() string {
 	uri := fmt.Sprintf("mongodb://%s:%d", Manager.MongodbHostname, Manager.MongodbPort)
-	log.Println("connecting to MongoAB URL :" + uri)
+	log.Println("connecting to MongoDB URL :" + uri)
 	return uri
 }

@@ -3,8 +3,10 @@ package task
 import (
 	"context"
 	"log"
+	"time"
 
 	"github.com/ash3798/AmazonWebScraper/persistence/config"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -18,8 +20,9 @@ type Product struct {
 }
 
 type ProductInfo struct {
-	Url     string
-	Product Product
+	Url        string
+	Product    Product
+	ScrapeTime time.Time
 }
 
 var (
@@ -59,12 +62,37 @@ func connect() (*mongo.Client, bool) {
 
 func PersistDataToDB(productInfo ProductInfo) error {
 	collection := MongoDB.Database(config.Manager.MongoDBName).Collection(config.Manager.MongoCollectionName)
+
+	productInfo.ScrapeTime = time.Now()
+	log.Printf("product info , %+v", productInfo)
+	if !updateIfPresent(collection, productInfo) {
+		return InsertToDB(collection, productInfo)
+	}
+	return nil
+}
+
+func updateIfPresent(collection *mongo.Collection, productInfo ProductInfo) bool {
+	res := collection.FindOneAndReplace(
+		context.TODO(),
+		bson.M{"url": productInfo.Url},
+		productInfo,
+	)
+
+	if res.Err() != nil {
+		log.Println("Could not find the document present already with this url in store")
+		return false
+	}
+	log.Println("Successfully updated record with newer info in database")
+	return true
+}
+
+func InsertToDB(collection *mongo.Collection, productInfo ProductInfo) error {
 	res, err := collection.InsertOne(context.TODO(), productInfo)
 	if err != nil {
 		log.Println("error while inserting the record , Error :", err.Error())
 		return err
 	}
 
-	log.Println("successfully inserted single document: ", res.InsertedID)
+	log.Println("Successfully inserted single document: ", res.InsertedID)
 	return nil
 }
