@@ -61,7 +61,8 @@ Response :
     }
 }
 ```
-  > * Api has been made syncronous as if now for easy accessibility of scrape results. Thus upon request it will scrape, prepare result and respond back with result.
+  > * Time taken by the API to respond back is directly propotional to the time taken to scrape.
+  > * Currently Api has been made syncronous for easy accessibility of scrape results. Thus upon request it will scrape, prepare result and respond back with result.
   > * For faster responses to api request, scraping can also be made asyncronous and OK status can be sent back to user on successful receive. 
   > * Once server is done with scraping, it will send the scrape results to the database (done asyncronously).
 
