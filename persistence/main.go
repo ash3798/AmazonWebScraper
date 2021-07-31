@@ -13,11 +13,11 @@ import (
 func main() {
 	log.Println("Starting persistence Service")
 
-	if !task.InitDatabaseClient() {
+	if !config.InitEnv() {
 		return
 	}
 
-	if !config.InitEnv() {
+	if !task.InitDatabaseClient() {
 		return
 	}
 

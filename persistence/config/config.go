@@ -30,5 +30,6 @@ func InitEnv() bool {
 
 func GetMongoURL() string {
 	uri := fmt.Sprintf("mongodb://%s:%d", Manager.MongodbHostname, Manager.MongodbPort)
+	log.Println("connecting to MongoAB URL :" + uri)
 	return uri
 }

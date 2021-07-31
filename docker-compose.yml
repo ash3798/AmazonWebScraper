@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  scraper:
+    environment:
+      - SCRAPER_SERVICE_PORT=9091
+      - PERSIST_SERVICE_URL=http://persistence:9092/url/persist
+    build:
+      context: .
+      dockerfile: ./scraper/Dockerfile
+    ports:
+      - "9091:9091"
+  persistence:
+    environment:
+      - MONGODB_HOSTNAME=mongo
+      - MONGODB_PORT=27017
+      - PERSIST_SERVICE_PORT=9092
+    build:
+      context: .
+      dockerfile: ./persistence/Dockerfile
+    ports:
+      - "9092:9092"
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"

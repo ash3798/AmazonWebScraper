@@ -37,7 +37,8 @@ func InitDatabaseClient() bool {
 }
 
 func connect() (*mongo.Client, bool) {
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	mongoUri := config.GetMongoURL()
+	clientOptions := options.Client().ApplyURI(mongoUri)
 
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
