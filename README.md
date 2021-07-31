@@ -61,9 +61,13 @@ Response :
     }
 }
 ```
-  > * Api has been made syncronous as if now for easy accessibility of scrape results. Thus upon request it will scrape, prepare result and respond back with result.
+  > * Time taken by the API to respond back is directly propotional to the time taken to scrape.
+  > * Currently Api has been made syncronous for easy accessibility of scrape results. Thus upon request it will scrape, prepare result and respond back with result.
   > * For faster responses to api request, scraping can also be made asyncronous and OK status can be sent back to user on successful receive. 
   > * Once server is done with scraping, it will send the scrape results to the database (done asyncronously).
+
+**NOTE :**
+  > If you send the request to scrape same URL again, the app will update the existing scrape results in Database to new updated results. But it will not add a new record for same URL in database again.
 
 ## Visualizing Data
 Data can be seen by in MongoDB. You can access Mongo using two ways
@@ -114,7 +118,8 @@ Data can be seen by in MongoDB. You can access Mongo using two ways
             description: 'Next Gen speed: experience the world’s fastest 0. 02 sec AF with real-time AF and object tracking.Enhanced subject capture: wide 425 Phase/ 425 contrast detection points over 84% of the sensor',
             price: '$898.00',
             totalreviews: 1083
-          }
+          },
+          scrapetime: ISODate("2021-07-31T17:42:14.088Z")
         }
       ]
       ```
